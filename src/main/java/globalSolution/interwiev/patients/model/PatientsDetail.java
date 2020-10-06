@@ -1,6 +1,5 @@
 package globalSolution.interwiev.patients.model;
 
-import globalSolution.interwiev.patients.dto.request.LocationRequestDTO;
 import globalSolution.interwiev.patients.dto.request.PatientsRequestDTO;
 import lombok.Getter;
 import lombok.Setter;

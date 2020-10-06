@@ -1,6 +1,5 @@
 package globalSolution.interwiev.patients.dto.request;
 
-import globalSolution.interwiev.patients.model.PatientsDetail;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,5 +13,4 @@ public class PatientsRequestDTO {
     private int acceptedOffers;
     private int canceledOffers;
     private int averageReplyTime;
-
 }
