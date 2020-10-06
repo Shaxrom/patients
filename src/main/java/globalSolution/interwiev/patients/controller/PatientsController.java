@@ -18,6 +18,11 @@ public class PatientsController {
     @Autowired
     private PatientsService patientsService;
 
+    /**
+     * Add all patients to MockDB,before get
+     * @return void
+     */
+
     @PostMapping
     public void addAll(@RequestBody List<PatientsRequestDTO> patientsRequestDTOs){
         patientsService.addAllPatients(patientsRequestDTOs);
