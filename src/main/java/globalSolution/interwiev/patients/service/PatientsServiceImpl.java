@@ -8,6 +8,7 @@ import globalSolution.interwiev.patients.repository.MockDBPatientsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,8 +26,8 @@ public class PatientsServiceImpl implements PatientsService {
     private static final double REPLY_TIME = 0.2;
 
     @Override
-    public void addAllPatients(List<PatientsRequestDTO> patientsRequestDTO) {
-        Map<String, PatientsDetail> patientsDetailMap = patientsRequestDTO.stream().collect(Collectors.toMap(PatientsRequestDTO::getId, PatientsDetail::new));
+    public void addAllPatients(PatientsRequestDTO[] patientsRequestDTO) {
+        Map<String, PatientsDetail> patientsDetailMap = Arrays.stream(patientsRequestDTO).collect(Collectors.toMap(PatientsRequestDTO::getId, PatientsDetail::new));
         MockDBPatientsRepository.patientsDetail.putAll(patientsDetailMap);
     }
 
@@ -38,12 +39,17 @@ public class PatientsServiceImpl implements PatientsService {
             double chance = calculateChance(MockDBPatientsRepository.patientsDetail.get(key), distanceFacility);
             resultMap.put(key,chance);
         }
-        return resultMap.entrySet().stream().sorted(Map.Entry.<String, Double>comparingByValue().reversed()).limit(10).collect(Collectors.toList());
+        return resultMap
+                .entrySet()
+                .stream()
+                .sorted(Map.Entry.<String, Double>comparingByValue().reversed())
+                .limit(10)
+                .collect(Collectors.toList());
     }
 
     private double calculateChance(PatientsDetail patientsDetail,double distanceFacility){
         double age = patientsDetail.getAge()*AGE;
-        double distance = Math.abs(distanceFacility-distanceService.findDistance(patientsDetail.getLocation()));
+        double distance = Math.abs(distanceFacility-distanceService.findDistance(patientsDetail.getLocation()))*DISTANCE_TO_PRACTICE;
         double accepted = patientsDetail.getAcceptedOffers()*ACCEPTED_OFFERS;
         double cancelled = patientsDetail.getCanceledOffers()*CANCELLED_OFFERS;
         double averageReplyTime = patientsDetail.getAverageReplyTime()*REPLY_TIME;

@@ -7,6 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 public interface PatientsService {
-    void addAllPatients(List<PatientsRequestDTO> patientsRequestDTO);
+    void addAllPatients(PatientsRequestDTO[] patientsRequestDTO);
     List<Map.Entry<String, Double>> getFirstTenPatients(LocationRequestDTO locationRequestDTO);
 }

@@ -12,19 +12,19 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping(path = "/api/patients", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "/api/patients")
 public class PatientsController {
 
     @Autowired
     private PatientsService patientsService;
 
     /**
-     * Add all patients to MockDB,before get
+     * Add all patients from patients.json to MockDB,before get
      * @return void
      */
 
     @PostMapping
-    public void addAll(@RequestBody List<PatientsRequestDTO> patientsRequestDTOs){
+    public void addAll(@RequestBody PatientsRequestDTO[] patientsRequestDTOs){
         patientsService.addAllPatients(patientsRequestDTOs);
     }
 
